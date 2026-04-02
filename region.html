@@ -228,5 +228,20 @@
 
 </div>
 
+<script>
+    function notifyHeight() {
+        var h = document.documentElement.scrollHeight;
+        window.parent.postMessage({ iframeHeight: h }, '*');
+    }
+
+    document.querySelectorAll('details').forEach(function(el) {
+        el.addEventListener('toggle', function() {
+            notifyHeight();
+        });
+    });
+
+    window.addEventListener('load', notifyHeight);
+</script>
+
 </body>
 </html>
