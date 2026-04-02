@@ -125,7 +125,7 @@
 </head>
 <body>
 
-<div class="accordion-wrap">
+<div id="content-wrap" class="accordion-wrap">
 
     <!-- 배송비 -->
     <details class="deliveryfee-item">
@@ -228,20 +228,22 @@
 </div>
 
 <script>
+    var wrap = document.getElementById('content-wrap');
+
     function notifyHeight() {
-        var h = document.documentElement.scrollHeight;
+        var h = wrap.offsetHeight;
         window.parent.postMessage({ iframeHeight: h }, '*');
     }
 
     document.querySelectorAll('details').forEach(function(el) {
         el.addEventListener('toggle', function() {
-            notifyHeight();
+            // 브라우저가 DOM을 갱신한 뒤 측정
+            requestAnimationFrame(notifyHeight);
         });
     });
 
     window.addEventListener('load', function() {
         notifyHeight();
-        // 렌더링 완료 후 한 번 더 전송 (레이아웃 확정 후)
         setTimeout(notifyHeight, 100);
     });
 </script>
