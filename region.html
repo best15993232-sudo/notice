@@ -1,127 +1,115 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>배송비 추가지역 안내</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
-        .accordion-wrap {
-            max-width: 800px;
-            margin: 0 auto;
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
-            -webkit-font-smoothing: antialiased;
-        }
-        .accordion-wrap .deliveryfee-item {
-            border-bottom: 1px solid #e5e5e5;
-            margin-top: 4px;
-        }
-        .accordion-wrap .deliveryfee-header {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 4px;
-            padding: 20px 4px;
-            position: relative;
-            cursor: pointer;
-            user-select: none;
-        }
-        .accordion-wrap .deliveryfee-header::after {
-            content: '+';
-            font-size: 20px;
-            font-weight: 300;
-            color: #999;
-            position: absolute;
-            right: 4px;
-            top: 20px;
-            width: 20px;
-            text-align: center;
-        }
-        .accordion-wrap .deliveryfee-header.open::after {
-            content: '\2212';
-        }
-        .accordion-wrap .deliveryfee-header .df-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: #1c1c1c;
-        }
-        .accordion-wrap .deliveryfee-header .df-sub {
-            font-size: 15px;
-            font-weight: 400;
-            color: #999;
-            letter-spacing: 0;
-        }
-        .accordion-wrap .df-content {
-            display: none;
-            padding: 0 0 24px;
-        }
-        .accordion-wrap .df-province {
-            padding: 0;
-        }
-        .accordion-wrap .df-province:nth-child(even) {
-            background: #f8f8f8;
-            border-radius: 6px;
-        }
-        .accordion-wrap .df-province-header {
-            font-size: 13px;
-            font-weight: 700;
-            color: #111;
-            padding: 14px 16px 4px;
-        }
-        .accordion-wrap .df-row {
-            display: flex;
-            align-items: baseline;
-            justify-content: space-between;
-            padding: 8px 16px;
-            gap: 16px;
-        }
-        .accordion-wrap .df-row + .df-row {
-            border-top: 1px solid #eee;
-            margin-left: 16px;
-            margin-right: 16px;
-            padding-left: 0;
-            padding-right: 0;
-        }
-        .accordion-wrap .df-row:last-child {
-            padding-bottom: 14px;
-        }
-        .accordion-wrap .df-location {
-            flex: 1;
-            font-size: 12px;
-            color: #555;
-            word-break: keep-all;
-            line-height: 1.65;
-        }
-        .accordion-wrap .df-fee {
-            flex-shrink: 0;
-            font-size: 12px;
-            font-weight: 700;
-            color: #e04040;
-            white-space: nowrap;
-            text-align: right;
-        }
-        .accordion-wrap .df-footer {
-            padding: 14px 16px;
-            font-size: 11px;
-            color: #999;
-            text-align: center;
-            border-top: 1px solid #eee;
-            margin-top: 4px;
-        }
-    </style>
-</head>
-<body>
+<style>
+    .df-wrap {
+        max-width: 800px;
+        margin: 0 auto;
+        font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+        -webkit-font-smoothing: antialiased;
+    }
+    .df-wrap details {
+        border-bottom: 1px solid #e5e5e5;
+        margin-top: 4px;
+    }
+    .df-wrap details summary {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        padding: 20px 4px;
+        position: relative;
+        cursor: pointer;
+        user-select: none;
+        list-style: none;
+    }
+    .df-wrap details summary::-webkit-details-marker { display: none; }
+    .df-wrap details summary::marker { display: none; content: ''; }
+    .df-wrap details summary::after {
+        content: '+';
+        font-size: 20px;
+        font-weight: 300;
+        color: #999;
+        position: absolute;
+        right: 4px;
+        top: 20px;
+        width: 20px;
+        text-align: center;
+    }
+    .df-wrap details[open] summary::after {
+        content: '\2212';
+    }
+    .df-wrap .df-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: #1c1c1c;
+    }
+    .df-wrap .df-sub {
+        font-size: 15px;
+        font-weight: 400;
+        color: #999;
+    }
+    .df-wrap .df-content {
+        padding: 0 0 24px;
+    }
+    .df-wrap .df-province {
+        padding: 0;
+    }
+    .df-wrap .df-province:nth-child(even) {
+        background: #f8f8f8;
+        border-radius: 6px;
+    }
+    .df-wrap .df-province-header {
+        font-size: 13px;
+        font-weight: 700;
+        color: #111;
+        padding: 14px 16px 4px;
+    }
+    .df-wrap .df-row {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        padding: 8px 16px;
+        gap: 16px;
+    }
+    .df-wrap .df-row + .df-row {
+        border-top: 1px solid #eee;
+        margin-left: 16px;
+        margin-right: 16px;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .df-wrap .df-row:last-child {
+        padding-bottom: 14px;
+    }
+    .df-wrap .df-location {
+        flex: 1;
+        font-size: 12px;
+        color: #555;
+        word-break: keep-all;
+        line-height: 1.65;
+    }
+    .df-wrap .df-fee {
+        flex-shrink: 0;
+        font-size: 12px;
+        font-weight: 700;
+        color: #e04040;
+        white-space: nowrap;
+        text-align: right;
+    }
+    .df-wrap .df-footer {
+        padding: 14px 16px;
+        font-size: 11px;
+        color: #999;
+        text-align: center;
+        border-top: 1px solid #eee;
+        margin-top: 4px;
+    }
+</style>
 
-<div id="content-wrap" class="accordion-wrap">
-
-    <div class="deliveryfee-item">
-        <div class="deliveryfee-header" onclick="toggleAccordion(this)">
+<div class="df-wrap">
+    <details>
+        <summary>
             <span class="df-title">전국 무료배송</span>
             <span class="df-sub">일부 지역 제외 · 배송비 추가 지역은 별도 안내 드립니다</span>
-        </div>
+        </summary>
         <div class="df-content">
 
             <div class="df-province">
@@ -212,27 +200,5 @@
 
             <div class="df-footer">그 외 도서산간 지역은 별도 안내드립니다.</div>
         </div>
-    </div>
-
+    </details>
 </div>
-
-<script>
-    var wrap = document.getElementById('content-wrap');
-
-    function notifyHeight() {
-        window.parent.postMessage({ iframeHeight: wrap.offsetHeight }, '*');
-    }
-
-    function toggleAccordion(header) {
-        var content = header.nextElementSibling;
-        var isOpen = content.style.display === 'block';
-        content.style.display = isOpen ? 'none' : 'block';
-        header.classList.toggle('open', !isOpen);
-        notifyHeight();
-    }
-
-    notifyHeight();
-</script>
-
-</body>
-</html>
