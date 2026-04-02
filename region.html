@@ -22,12 +22,11 @@
         }
         .accordion-wrap details.deliveryfee-item summary {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 4px;
             flex-direction: column;
             align-items: flex-start;
             gap: 4px;
+            padding: 20px 4px;
+            position: relative;
             cursor: pointer;
             user-select: none;
             list-style: none;
@@ -129,7 +128,7 @@
 <div class="accordion-wrap">
 
     <!-- 배송비 -->
-    <details class="deliveryfee-item" style="position:relative;">
+    <details class="deliveryfee-item">
         <summary>
             <span class="df-title">전국 무료배송</span>
             <span class="df-sub">일부 지역 제외 · 배송비 추가 지역은 별도 안내 드립니다</span>
@@ -240,7 +239,11 @@
         });
     });
 
-    window.addEventListener('load', notifyHeight);
+    window.addEventListener('load', function() {
+        notifyHeight();
+        // 렌더링 완료 후 한 번 더 전송 (레이아웃 확정 후)
+        setTimeout(notifyHeight, 100);
+    });
 </script>
 
 </body>
